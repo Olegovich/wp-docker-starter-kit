@@ -1,0 +1,2 @@
+ARG WP_VERSION
+FROM wordpress:${WP_VERSION}

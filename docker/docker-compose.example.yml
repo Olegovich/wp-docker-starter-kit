@@ -1,5 +1,12 @@
 version: "3.9"
 
+networks:
+  starterkit:
+    external: true
+
+volumes:
+  mysql:
+
 services:
   mysql:
     container_name: ${COMPOSE_PROJECT_NAME}-mysql
@@ -23,6 +30,8 @@ services:
       timeout: 5s
       retries: 3
       start_period: 0s
+    networks:
+      - starterkit
 
   nginx:
     container_name: ${COMPOSE_PROJECT_NAME}-nginx
@@ -41,10 +50,15 @@ services:
       - ${NGINX_HOST_HTTP_PORT}:80
       - ${NGINX_HOST_HTTPS_PORT}:443
     restart: unless-stopped
+    networks:
+      - starterkit
 
   wordpress:
     container_name: ${COMPOSE_PROJECT_NAME}-wp
-    image: wordpress:${WP_VERSION}
+    build:
+      context: ./wordpress
+      args:
+        - WP_VERSION=${WP_VERSION}
     depends_on:
       mysql:
         condition: service_healthy
@@ -63,6 +77,5 @@ services:
     user: ${USER_UID}:${USER_GID}
     extra_hosts:
       - "${WP_VIRTUAL_HOST}:${WP_EXTRA_HOST_IP}"
-
-volumes:
-  mysql:
+    networks:
+      - starterkit
