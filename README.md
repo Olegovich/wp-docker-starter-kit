@@ -59,7 +59,7 @@
         sudo mv mkcert-vX.X.X-linux-amd64 /usr/local/bin
         ```
     
-    - Далее в терминале из папки __/usr/local/bin__, делаем файл исполняемым и создаем на него символическую ссылку:
+    - Далее в терминале из папки __/usr/local/bin__, делаем файл исполняемым и создаем на него symlink:
         ```bash
         chmod +x mkcert-vX.X.X-linux-amd64
         sudo ln -s mkcert-vX.X.X-linux-amd64 mkcert
@@ -82,11 +82,11 @@
     docker network inspect starterkit
     ```
 
-    Пример вывода команды __inspect__:
+    Пример вывода информации о сети:
     
     ```bash
     "Name": "starterkit",
-    --//--
+    ...
     "IPAM": {
         "Driver": "default",
         "Options": {},
@@ -149,7 +149,7 @@ docker-compose stop
    docker network inspect starterkit
    ```
 
-2. Скопировать ip-адрес из "Gateway" (будет отличаться от предыдущего) 
+2. Скопировать ip-адрес из "Gateway" (__будет отличаться от предыдущего__) 
 и вставить в файл проекта __/docker/.env__ в параметр __WP_EXTRA_HOST_IP__
 
 3. Развернуть проект из папки __/www__:
