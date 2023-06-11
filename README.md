@@ -75,17 +75,17 @@
         mkcert -key-file wp-starterkit.local.key -cert-file wp-starterkit.local.crt wp-starterkit.local
         ```
 
-8. Затем, чтобы пофиксить ошибку REST-API в WP после запуска сайта, нужно создать сеть в докере 
+8. Затем, чтобы пофиксить ошибку REST-API в WP (которая появится после запуска сайта), нужно создать сеть в докере 
 и взять оттуда __Gateway IP__, который будем передавать в докер-контейнер:
     ```bash
-    docker network create starterkit_default
-    docker network inspect starterkit_default
+    docker network create starterkit
+    docker network inspect starterkit
     ```
 
-    Пример вывода команды __inspect__ после создания сети:
+    Пример вывода команды __inspect__:
     
     ```bash
-    "Name": "starterkit_default",
+    "Name": "starterkit",
     --//--
     "IPAM": {
         "Driver": "default",
@@ -112,7 +112,7 @@
 11. После быстрой установки WP, нужно зайти в админке в настройки __Permalinks__, 
 и выбрать "Custom Structure" с каким-либо значением, например __/%postname%/__
 
-    > Если не изменить Permalinks, тогда не будет работать структура урлов REST-API в формате /wp-json - 
+    > Если не изменить Permalinks, тогда не будет работать структура урлов REST-API в формате /wp-json 
     https://developer.wordpress.org/rest-api/extending-the-rest-api/routes-and-endpoints/
 
 ---
@@ -150,7 +150,7 @@ docker-compose stop
    ```
 
 2. Скопировать ip-адрес из "Gateway" (будет отличаться от предыдущего) 
-и вставить в файл проекта __/docker/.env.example__ в параметр __WP_EXTRA_HOST_IP__
+и вставить в файл проекта __/docker/.env__ в параметр __WP_EXTRA_HOST_IP__
 
 3. Развернуть проект из папки __/www__:
    ```bash
