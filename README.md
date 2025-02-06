@@ -3,12 +3,12 @@
 > Стартовая сборка, только для локальной разработки под Linux (Ubuntu).
 
 ## Развертывание нового проекта:
-1. Установить docker. После установки проверить версию:
+1. Установить docker, проверить версию:
     ```bash
     docker version
     ```
     
-2. Установить docker-compose. После установки проверить версию:
+2. Установить docker-compose, проверить версию:
     ```bash
     docker-compose version
     ```
@@ -65,8 +65,8 @@
         mkcert -key-file wp-starterkit.local.key -cert-file wp-starterkit.local.crt wp-starterkit.local
         ```
 
-8. Затем, чтобы пофиксить ошибку REST-API в WP (которая появится после запуска сайта), нужно создать сеть в докере 
-и взять оттуда __Gateway IP__, который будем передавать в докер-контейнер:
+8. Затем, чтобы пофиксить ошибку REST-API в WP, нужно создать сеть и взять оттуда __Gateway IP__, 
+который будем передавать в докер-контейнер:
     ```bash
     docker network create starterkit-wp-network
     docker network inspect starterkit-wp-network
@@ -94,16 +94,12 @@
     
 9. Далее можно развертывать проект из папки __/www__:
     ```bash
-    bash run.sh
+    ./run.sh
     ```
     
 10. После успешного развертывания, сайт будет доступен по ссылке <https://wp-starterkit.local/> 
 
-11. После быстрой установки WP, нужно зайти в админке в настройки __Permalinks__, 
-и выбрать "Post name".
-
-    > Если не изменить Permalinks - не будет работать структура урлов REST-API в формате /wp-json 
-    https://developer.wordpress.org/rest-api/extending-the-rest-api/routes-and-endpoints/
+11. После быстрой установки WP - зайти в админке в настройки __Permalinks__ и выбрать "Post name".
 
 ---
 
@@ -144,5 +140,5 @@ docker-compose stop
 
 3. Развернуть проект из папки __/www__:
    ```bash
-   bash run.sh
+   ./run.sh
    ```
