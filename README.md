@@ -3,22 +3,12 @@
 > Стартовая сборка, только для локальной разработки под Linux (Ubuntu).
 
 ## Развертывание нового проекта:
-1. Установить docker:
-    ```bash
-    curl -fsSL https://get.docker.com -o get-docker.sh
-    sudo sh get-docker.sh
-    ```
-
+1. Установить docker. После установки проверить версию:
     ```bash
     docker version
     ```
     
-2. Установить docker-compose версии __1.29.2__:
-    ```bash
-    sudo curl -sL "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-    sudo chmod +x /usr/local/bin/docker-compose
-    ```
-
+2. Установить docker-compose. После установки проверить версию:
     ```bash
     docker-compose version
     ```
@@ -78,14 +68,14 @@
 8. Затем, чтобы пофиксить ошибку REST-API в WP (которая появится после запуска сайта), нужно создать сеть в докере 
 и взять оттуда __Gateway IP__, который будем передавать в докер-контейнер:
     ```bash
-    docker network create starterkit
-    docker network inspect starterkit
+    docker network create starterkit-wp-network
+    docker network inspect starterkit-wp-network
     ```
 
     Пример вывода информации о сети:
     
     ```bash
-    "Name": "starterkit",
+    "Name": "starterkit-wp-network",
     ...
     "IPAM": {
         "Driver": "default",
@@ -110,9 +100,9 @@
 10. После успешного развертывания, сайт будет доступен по ссылке <https://wp-starterkit.local/> 
 
 11. После быстрой установки WP, нужно зайти в админке в настройки __Permalinks__, 
-и выбрать "Custom Structure" с каким-либо значением, например __/%postname%/__
+и выбрать "Post name".
 
-    > Если не изменить Permalinks, тогда не будет работать структура урлов REST-API в формате /wp-json 
+    > Если не изменить Permalinks - не будет работать структура урлов REST-API в формате /wp-json 
     https://developer.wordpress.org/rest-api/extending-the-rest-api/routes-and-endpoints/
 
 ---
@@ -138,15 +128,15 @@ docker-compose stop
 1. Перейти в папку __/docker__ и выполнить команды:
     ```bash
     docker-compose down
-    docker image rm $(docker images -q starterkit_mysql) $(docker images -q starterkit_nginx) $(docker images -q starterkit_wordpress)
-    docker volume rm starterkit_mysql
-    docker network rm starterkit
+    docker image rm $(docker images -q starterkit-wp_mysql) $(docker images -q starterkit-wp_nginx) $(docker images -q starterkit-wp_wordpress)
+    docker volume rm starterkit-wp_mysql
+    docker network rm starterkit-wp-network
     rm -rf ../www/html
     ```
    
    ```bash
-   docker network create starterkit
-   docker network inspect starterkit
+   docker network create starterkit-wp-network
+   docker network inspect starterkit-wp-network
    ```
 
 2. Скопировать ip-адрес из "Gateway" и вставить в файл проекта __/docker/.env__ в параметр __WP_EXTRA_HOST_IP__ 
